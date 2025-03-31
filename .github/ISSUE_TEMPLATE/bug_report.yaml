@@ -1,0 +1,103 @@
+name: "🐛 Bug Report"
+description: Create a report to help us improve Godot Launcher
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        When submitting an issue or bug report, please follow these guidelines to help us address it more efficiently:
+        
+        1. **Descriptive Title** – Keep it clear and concise.
+        2. **One Bug Per Issue** – Submit multiple reports separately if needed.
+        3. **Update First** – Confirm you’re using the latest version.
+        4. **Search Before Posting** – Check [open issues](https://github.com/godotlauncher/launcher/issues) and [closed issues](https://github.com/godotlauncher/launcher/issues?q=is%3Aissue+is%3Aclosed) first.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "Describe the bug"
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: "To Reproduce"
+      description: Describe the steps to reproduce the issue.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Expected behavior"
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "Screenshots"
+      description: If applicable, add screenshots to help explain the problem.
+      placeholder: "Drag and drop screenshots here or paste image URLs"
+
+  - type: input
+    id: os
+    attributes:
+      label: "Operating System"
+      placeholder: "e.g. Windows 11, macOS Ventura, Ubuntu 22.04"
+    validations:
+      required: true
+
+  - type: input
+    id: launcher_version
+    attributes:
+      label: "Godot Launcher Version"
+      placeholder: "e.g. 1.1.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: latest_tested
+    attributes:
+      label: "Have you tested with the latest version?"
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: regression
+    attributes:
+      label: "Did this work in a previous version?"
+      description: Select yes if this bug didn't exist before.
+      options:
+        - "Yes"
+        - "No"
+        - "Not sure"
+    validations:
+      required: true
+
+  - type: input
+    id: previous_version
+    attributes:
+      label: "If yes, which version did not have this bug?"
+      placeholder: "e.g. 1.0.0"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: log_consent
+    attributes:
+      label: "If more info is needed..."
+      description: Check if you're open to sharing logs if asked during debugging.
+      options:
+        - label: I'm willing to share logs if needed

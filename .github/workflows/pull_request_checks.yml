@@ -1,0 +1,33 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22' # Adjust the version as needed
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Run lint
+      - name: Run lint
+        run: npm run lint
+
+      # Run build:sources
+      - name: Run build:sources
+        run: npm run build:sources
