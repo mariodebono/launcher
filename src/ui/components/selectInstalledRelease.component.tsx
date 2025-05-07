@@ -1,9 +1,9 @@
+import { TriangleAlert } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRelease } from '../hooks/useRelease';
 import { sortReleases } from '../releaseStoring.utils';
-import { CloseButton } from './closeButton.component';
-import { IconAlert } from './icons';
 import { InstallEditorSubView } from '../views/subViews/installEditor.subview';
+import { CloseButton } from './closeButton.component';
 
 
 type InstalledReleaseSelectorProps = {
@@ -82,7 +82,7 @@ export const InstalledReleaseSelector: React.FC<InstalledReleaseSelectorProps> =
                                     filteredReleases.length === 0 && <tr>
                                         <td colSpan={2} className="">
                                             <div className="flex flex-row gap-2 text-warning items-center">
-                                                <IconAlert className="fill-warning" />
+                                                <TriangleAlert className="stroke-warning" />
                                                 No releases found, required editor version {parseInt(currentRelease.version_number.toString())}.x
                                             </div>
                                             <div><button className="btn btn-link" onClick={() => setShowInstallEditor(true)}>Install releases</button></div>
