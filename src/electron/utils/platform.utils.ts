@@ -1,12 +1,12 @@
+import { app } from 'electron';
+import logger from 'electron-log';
 import * as os from 'node:os';
 import * as path from 'node:path';
 import which from 'which';
-import { app } from 'electron';
-import logger from 'electron-log';
 
-import { APP_INTERNAL_NAME, INSTALLED_RELEASES_FILENAME, PREFS_FILENAME, PRERELEASES_FILENAME, RELEASES_FILENAME } from '../constants.js';
 import { exec } from 'child_process';
 import { getUserPreferences, setUserPreferences } from '../commands/userPreferences.js';
+import { APP_INTERNAL_NAME, INSTALLED_RELEASES_FILENAME, PREFS_FILENAME, PRERELEASES_FILENAME, RELEASES_FILENAME } from '../constants.js';
 import { isDev } from '../utils.js';
 
 
@@ -28,14 +28,21 @@ export function getDefaultDirs(): {
     installedReleasesCachePath: string;
     prereleaseCachePath: string;
     } {
+    // Select the correct path module based on the platform
+    // this is to make the function testable on all platforms
+    // by mocking the os.platform() function and the path module
 
-    const configDir = path.resolve(os.homedir(), `.${APP_INTERNAL_NAME}`);
-    const dataDir = path.resolve(os.homedir(), 'Godot', 'Editors');
-    const projectDir = path.resolve(os.homedir(), 'Godot', 'Projects');
-    const prefsPath = path.resolve(configDir, PREFS_FILENAME);
-    const releaseCachePath = path.resolve(configDir, RELEASES_FILENAME);
-    const prereleaseCachePath = path.resolve(configDir, PRERELEASES_FILENAME);
-    const installedReleasesCachePath = path.resolve(configDir, INSTALLED_RELEASES_FILENAME);
+    const platform = os.platform();
+    const pathModule = platform === 'win32' ? path.win32 : path.posix;
+    const homedir = os.homedir();
+
+    const configDir = pathModule.resolve(homedir, `.${APP_INTERNAL_NAME}`);
+    const dataDir = pathModule.resolve(homedir, 'Godot', 'Editors');
+    const projectDir = pathModule.resolve(homedir, 'Godot', 'Projects');
+    const prefsPath = pathModule.resolve(configDir, PREFS_FILENAME);
+    const releaseCachePath = pathModule.resolve(configDir, RELEASES_FILENAME);
+    const prereleaseCachePath = pathModule.resolve(configDir, PRERELEASES_FILENAME);
+    const installedReleasesCachePath = pathModule.resolve(configDir, INSTALLED_RELEASES_FILENAME);
 
     return {
         prefsPath,
