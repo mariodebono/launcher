@@ -1,9 +1,10 @@
 import * as fs from 'node:fs';
+import * as os from 'node:os';
 import * as path from 'node:path';
 
-import { getDefaultDirs } from './platform.utils.js';
-import { getUserPreferences, setUserPreferences } from '../commands/userPreferences.js';
 import { startAutoUpdateChecks, stopAutoUpdateChecks } from '../autoUpdater.js';
+import { getUserPreferences, setUserPreferences } from '../commands/userPreferences.js';
+import { getDefaultDirs } from './platform.utils.js';
 
 const loadedPrefs: UserPreferences | null = null;
 
@@ -19,12 +20,14 @@ export async function getConfigDir(): Promise<string> {
 
 export async function getDefaultPrefs(): Promise<UserPreferences> {
     const defaultPrefs = getDefaultDirs();
+    const platform = os.platform();
+    const pathModule = platform === 'win32' ? path.win32 : path.posix;
 
     return {
-        prefs_version: 1,
-        install_location: path.resolve(defaultPrefs.dataDir),
-        config_location: path.resolve(defaultPrefs.configDir),
-        projects_location: path.resolve(defaultPrefs.projectDir),
+        prefs_version: 2,
+        install_location: pathModule.resolve(defaultPrefs.dataDir),
+        config_location: pathModule.resolve(defaultPrefs.configDir),
+        projects_location: pathModule.resolve(defaultPrefs.projectDir),
         post_launch_action: 'close_to_tray',
         auto_check_updates: true,
         auto_start: true,
