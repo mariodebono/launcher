@@ -7,42 +7,38 @@ export async function removeProjectReleaseEditorWindows(
     projectEditorPath: string,
     release: InstalledRelease
 ) {
-    if (fs.existsSync(projectEditorPath)) {
+    if (!fs.existsSync(projectEditorPath)) {
+        return;
+    }
+
     // remove all files based on mono or not
-        const baseFileName = path.basename(release.editor_path);
-        const exePath = path.resolve(projectEditorPath, baseFileName);
-        const consolePath = path.resolve(
-            projectEditorPath,
-            baseFileName.replace('.exe', '_console.exe')
-        );
+    const baseFileName = path.basename(release.editor_path);
+    const exePath = path.resolve(projectEditorPath, baseFileName);
+    const consolePath = path.resolve(
+        projectEditorPath,
+        baseFileName.replace('.exe', '_console.exe')
+    );
 
-        logger.debug('Removing project editor exe and console exe');
-        logger.debug('Exe path:', exePath);
-        logger.debug('Console path:', consolePath);
-        logger.debug('Release mono:', release.mono);
-        logger.debug('Release path:', release.editor_path);
-        logger.debug('Project editor path:', projectEditorPath);
-        logger.debug('base file name:', baseFileName);
-        logger.debug(
-            'Project editor path exists:',
-            fs.existsSync(projectEditorPath)
-        );
-        logger.debug('Exe path exists:', fs.existsSync(exePath));
-        logger.debug('Console path exists:', fs.existsSync(consolePath));
+    logger.debug('Removing project editor exe and console exe');
+    logger.debug('Exe path:', exePath);
+    logger.debug('Console path:', consolePath);
+    logger.debug('Release mono:', release.mono);
+    logger.debug('Release path:', release.editor_path);
+    logger.debug('Project editor path:', projectEditorPath);
+    logger.debug('base file name:', baseFileName);
+    logger.debug(
+        'Project editor path exists:',
+        fs.existsSync(projectEditorPath)
+    );
+    logger.debug('Exe path exists:', fs.existsSync(exePath));
+    logger.debug('Console path exists:', fs.existsSync(consolePath));
 
-        if (fs.existsSync(exePath) && fs.existsSync(consolePath)) {
-            logger.debug('Removing editor exe and console exe');
-            await fs.promises.unlink(exePath);
-            await fs.promises.unlink(consolePath);
-        }
+    await fs.promises.rm(exePath, { force: true });
+    await fs.promises.rm(consolePath, { force: true });
 
-        if (release.mono) {
-            const sharpDir = path.resolve(projectEditorPath, 'GodotSharp');
-
-            if (fs.existsSync(sharpDir)) {
-                await fs.promises.rmdir(sharpDir, { recursive: true });
-            }
-        }
+    if (release.mono) {
+        const sharpDir = path.resolve(projectEditorPath, 'GodotSharp');
+        await fs.promises.rm(sharpDir, { recursive: true, force: true });
     }
 }
 
@@ -58,7 +54,8 @@ export async function removeProjectEditorWindows(
 export async function setProjectEditorReleaseWindows(
     projectEditorPath: string,
     release: InstalledRelease,
-    previousRelease?: InstalledRelease
+    previousRelease?: InstalledRelease,
+    useSymlinks = true
 ): Promise<LaunchPath> {
     // remove previous editor
     if (previousRelease) {
@@ -89,44 +86,43 @@ export async function setProjectEditorReleaseWindows(
     if (fs.existsSync(srcExePath) && fs.existsSync(srcConsolePath)) {
         logger.debug('Source paths exist');
 
-        // combine links
-        const links: SymlinkOptions[] = [
-            { target: srcExePath, path: dstExePath, type: 'file' },
-            { target: srcConsolePath, path: dstConsolePath, type: 'file' },
-        ];
-
-        if (release.mono && fs.existsSync(srcSharpDir)) {
-            links.push({
-                target: srcSharpDir,
-                path: dstSharpDir,
-                type: 'dir',
-            });
-        }
-
-        try {
-            // try to symlink then use with elevated permissions
-            await trySymlinkOrElevateAsync(links);
-        } catch (error) {
-            // if symlink fails, try to remove any existing files
-            if (fs.existsSync(dstExePath)) {
-                await fs.promises.unlink(dstExePath);
-            }
-            if (fs.existsSync(dstConsolePath)) {
-                await fs.promises.unlink(dstConsolePath);
-            }
-            if (fs.existsSync(dstSharpDir)) {
-                await fs.promises.unlink(dstSharpDir);
-            }
-            // then copy the files
-            // this is a fallback for when symlinks are not supported
+        const copyEditorFiles = async () => {
+            await fs.promises.rm(dstExePath, { force: true });
+            await fs.promises.rm(dstConsolePath, { force: true });
+            await fs.promises.rm(dstSharpDir, { recursive: true, force: true });
             await fs.promises.cp(srcExePath, dstExePath);
             await fs.promises.cp(srcConsolePath, dstConsolePath);
             if (release.mono && fs.existsSync(srcSharpDir)) {
-                // copy the GodotSharp folder
-                // this is a fallback for when symlinks are not supported
                 await fs.promises.mkdir(dstSharpDir, { recursive: true });
                 await fs.promises.cp(srcSharpDir, dstSharpDir, { recursive: true });
             }
+        };
+
+        if (useSymlinks) {
+            // combine links
+            const links: SymlinkOptions[] = [
+                { target: srcExePath, path: dstExePath, type: 'file' },
+                { target: srcConsolePath, path: dstConsolePath, type: 'file' },
+            ];
+
+            if (release.mono && fs.existsSync(srcSharpDir)) {
+                links.push({
+                    target: srcSharpDir,
+                    path: dstSharpDir,
+                    type: 'dir',
+                });
+            }
+
+            try {
+                // try to symlink then use with elevated permissions
+                await trySymlinkOrElevateAsync(links);
+            } catch (error) {
+                logger.warn('Failed to create symlinks, falling back to copy mode');
+                logger.warn(error);
+                await copyEditorFiles();
+            }
+        } else {
+            await copyEditorFiles();
         }
     }
     // create new editor

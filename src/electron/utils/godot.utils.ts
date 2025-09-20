@@ -8,6 +8,7 @@ import { removeProjectEditorWindows } from './godot.utils.windows.js';
 import { setProjectEditorReleaseDarwin } from './godot.utils.darwin.js';
 import { setProjectEditorReleaseLinux } from './godot.utils.linux.js';
 import { setProjectEditorReleaseWindows } from './godot.utils.windows.js';
+import { getLoadedPrefs } from './prefs.utils.js';
 
 // Default project definitions for different editor versions
 export const DEFAULT_PROJECT_DEFINITION: ProjectDefinition = new Map([
@@ -169,10 +170,13 @@ export async function SetProjectEditorRelease(
         logger.log('Project editor path:', projectEditorPath);
         logger.log('Release path:', release.editor_path);
         logger.log('Previous release path:', previousRelease?.editor_path);
+        const prefs = await getLoadedPrefs();
+        const shouldUseSymlinks = prefs.use_windows_symlinks !== false;
         return await setProjectEditorReleaseWindows(
             projectEditorPath,
             release,
-            previousRelease
+            previousRelease,
+            shouldUseSymlinks
         );
     } else if (process.platform === 'linux') {
         return await setProjectEditorReleaseLinux(

@@ -12,7 +12,7 @@ import { useTheme } from '../hooks/useTheme';
 
 export const SettingsView: React.FC = () => {
     const [activeTab, setActiveTab] = useState<'projects' | 'installs' | 'appearance' | 'behavior' | 'tools' | 'updates'>('projects');
-    const { preferences, savePreferences } = usePreferences();
+    const { preferences, savePreferences, platform } = usePreferences();
 
     const { theme, setTheme } = useTheme();
 
@@ -127,6 +127,41 @@ export const SettingsView: React.FC = () => {
                                 <ProjectLaunchAction />
                                 <div className="divider"></div>
                                 <AutoStartSetting />
+
+                                {platform === 'win32' && (
+                                    <>
+                                        <div className="divider"></div>
+                                        <div className="flex flex-col gap-4">
+                                            <div>
+                                                <h2 className="font-bold">Windows editor links</h2>
+                                                <p className="text-sm text-base-content/70">
+                                                    Choose how Godot Launcher connects editors to your projects on Windows.
+                                                </p>
+                                            </div>
+                                            <label className="flex flex-row items-start cursor-pointer gap-4">
+                                                <input
+                                                    type="checkbox"
+                                                    className="checkbox"
+                                                    checked={preferences?.use_windows_symlinks ?? true}
+                                                    onChange={(e) => {
+                                                        if (preferences) {
+                                                            savePreferences({
+                                                                ...preferences,
+                                                                use_windows_symlinks: e.target.checked,
+                                                            });
+                                                        }
+                                                    }}
+                                                />
+                                                <span className="flex flex-col gap-2">
+                                                    <span className="font-semibold">Use symbolic links for project editors</span>
+                                                    <span className="text-sm text-base-content/70">
+                                                        Keeps project setups small and lets editor updates roll out instantly. Disable this if creating links prompts for administrator access or if you prefer full copies instead.
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </>
+                                )}
                             </div>
 
                             {/* Tools */}
