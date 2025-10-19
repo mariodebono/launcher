@@ -1,0 +1,89 @@
+{
+  "title": "Progetti",
+  "buttons": {
+    "add": "Aggiungi",
+    "newProject": "Nuovo progetto",
+    "addProject": "Aggiungi progetto",
+    "createProject": "Crea progetto",
+    "refresh": "Aggiorna",
+    "launch": "Avvia",
+    "changeEditor": "Cambia editor"
+  },
+  "search": {
+    "placeholder": "Cerca"
+  },
+  "table": {
+    "name": "Nome",
+    "modified": "Modificato",
+    "editor": "Editor",
+    "version": "Versione",
+    "lastOpened": "Ultima apertura",
+    "actions": "Azioni",
+    "invalidProject": "Questo progetto non è valido, controlla percorso del progetto ed editor!",
+    "dotNetProject": "Questo è un progetto .NET",
+    "prerelease": "Utilizza una versione pre-release dell'editor Godot",
+    "windowedMode": "Questo progetto si apre in modalità finestra"
+  },
+  "addProject": {
+    "selectFile": "Seleziona file del progetto",
+    "godotProject": "Progetto Godot",
+    "errors": {
+      "projectExists": "Il progetto '{{path}}' esiste già",
+      "invalidPath": "Percorso del progetto non valido",
+      "invalidProjectFile": "File project.godot non valido",
+      "nameExists": "Esiste già un progetto con il nome '{{name}}'\nRinomina il progetto in 'project.godot' o rimuovi quello esistente.",
+      "invalidRenderer": "File di progetto non valido",
+      "invalidConfigVersion": "config_version del project.godot non valido.\nÈ supportata solo la versione di config 5",
+      "noStableReleases": "Nessuna versione stabile installata per Godot {{version}}.x\nInstalla una versione stabile di Godot {{version}}.x, poi prova di nuovo ad aggiungere il progetto.",
+      "noDotNetRelease": "Il progetto sembra essere un progetto .NET ma non è stata trovata nessuna versione dell'Editor con .NET",
+      "noCompatibleRelease": "Nessuna versione installata trovata per Godot {{version}}.x che supporta config_version {{configVersion}}."
+    }
+  },
+  "messages": {
+    "noProjects": "Nessun progetto trovato",
+    "noReleases": "Nessuna versione installata.",
+    "goToInstalls": "Vai alle installazioni.",
+    "noReleasesCta": "Nessuna versione installata. <Link>Vai alle installazioni</Link>",
+    "projectAdded": "Progetto aggiunto correttamente",
+    "projectRemoved": "Progetto rimosso",
+    "editorChanged": "Editor modificato correttamente",
+    "invalidProject": "Questo progetto non è valido, controlla percorso del progetto ed editor!",
+    "monoProject": "Questo è un progetto .NET",
+    "prereleaseVersion": "Utilizza una versione pre-release dell'editor Godot",
+    "waitingForDialog": "In attesa della finestra di dialogo per aggiungere il progetto...",
+    "needReleaseInstalled": "È necessario avere almeno una versione installata per aggiungere un progetto",
+    "addProjectError": "Qualcosa è andato storto durante l'aggiunta del progetto",
+    "setEditorError": "Qualcosa è andato storto durante l'impostazione dell'editor del progetto",
+    "projectNotValid": "Il progetto non è valido, assicurati che il progetto e la versione siano validi sul tuo computer."
+  },
+  "changeEditor": {
+    "errors": {
+      "projectNotFound": "Progetto non trovato",
+      "invalidEditorVersion": "Versione editor non valida",
+      "differentMajorVersion": "Non è possibile utilizzare una versione principale diversa dell'editor\nPer proteggere il tuo progetto consulta la guida ufficiale alla migrazione su https://godotengine.org"
+    }
+  },
+  "createProject": {
+    "title": "Nuovo progetto",
+    "projectName": "Nome progetto",
+    "projectPath": "Percorso progetto",
+    "selectVersion": "Seleziona versione di Godot",
+    "renderer": "Renderer",
+    "editNow": "Modifica ora",
+    "setupVSCode": "Configura Visual Studio Code come editor di testo",
+    "vscodeNotInstalled": "Visual Studio Code non è installato su questo computer",
+    "noVersionsInstalled": "Nessuna versione di Godot installata",
+    "errors": {
+      "nameRequired": "Il nome del progetto è obbligatorio",
+      "pathRequired": "Il percorso del progetto è obbligatorio",
+      "invalidPath": "Percorso del progetto non valido"
+    }
+  },
+  "searchPlaceholder": "Cerca progetti...",
+  "editorSettings": {
+    "title": "Impostazioni Editor",
+    "alreadyExists": "Le impostazioni dell'editor per {{version}} [.NET] esistono già e non sono state apportate modifiche per proteggere la tua configurazione.",
+    "switchingToDotNet": "Se stai passando a una versione .NET da GDScript, puoi configurare manualmente l'Editor Esterno da <strong>Impostazioni Editor -> Dotnent</strong> (interruttore avanzato: true).",
+    "readMore": "Leggi di più"
+  }
+}

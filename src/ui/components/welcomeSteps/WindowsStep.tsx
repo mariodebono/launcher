@@ -1,41 +1,64 @@
 import { ExternalLink } from 'lucide-react';
+import { Trans, useTranslation } from 'react-i18next';
 import { useAppNavigation } from '../../hooks/useAppNavigation';
 
 
 
 export const WindowsStep: React.FC = () => {
-
+    const { t } = useTranslation('welcome');
     const { openExternalLink } = useAppNavigation();
 
     return (
         <div className='text-sm'>
-            <h1 className="text-xl">Windows Note</h1>
+            <h1 className="text-xl">{t('windowsStep.title')}</h1>
             <p>
-                Starting from version 1.4.0, Godot Launcher can create{' '}
-                <code className="bg-base-300 px-2 rounded text-warning">symlinks</code> to the editor for each project.
-                To keep setup simple, we now default to local copies. You can enable symlinks anytime from <strong>Settings → Behavior → Editor symlinks</strong> when you want lower disk usage.
+                <Trans
+                    i18nKey="windowsStep.intro"
+                    ns="welcome"
+                    components={{
+                        code: <code className="bg-base-300 px-2 rounded text-warning" />,
+                        strong: <strong />
+                    }}
+                />
             </p>
-            <div className="pt-6 flex flex-col gap-2">
-                <h2 className="font-bold">What changed?</h2>
+            <div className="pt-4 flex flex-col gap-2">
                 <ul className="flex flex-col gap-4">
                     <li>
-                        Creating symbolic links on Windows requires administrator privileges and elevated command execution. The launcher now elevates permissions only when creating symlinks.
+                        {t('windowsStep.change1')}
+                    </li>
+                    <li><strong>
+                        <Trans
+                            i18nKey="windowsStep.change2"
+                            ns="welcome"
+                            components={{
+                                code: <code className="bg-base-300 px-2 rounded text-warning" />,
+                            }}
+                        />
+                    </strong>
                     </li>
                     <li>
-                        You will see a UAC prompt only if you are not an  <code className="bg-base-300 px-2 rounded text-warning">Administrator</code> on your PC and if{' '}
-                        <code className="bg-base-300 px-2 rounded text-warning">Developer Mode</code> is not enabled.
-                    </li>
-                    <li>
-                        Ready to try symlinks? Toggle on <strong>Editor symlinks</strong> in Settings when you're prepared for the occasional elevation prompt.
+                        <Trans
+                            i18nKey="windowsStep.change3"
+                            ns="welcome"
+                            components={{
+                                strong: <strong />
+                            }}
+                        />
                     </li>
                     <li className="flex flex-row gap-1 font-bold">
-                        NOTE: If you are using .NET-based editors, you need to install the .NET SDK from{' '}
-                        <button
-                            className="flex flex-row hover:underline items-basleline text-info"
-                            onClick={() => openExternalLink('https://dotnet.microsoft.com/download')}
-                        >
-                            Microsoft .NET website <ExternalLink className="w-4" />
-                        </button>
+                        <Trans
+                            i18nKey="windowsStep.dotnetNote"
+                            ns="welcome"
+                            components={{
+                                ButtonLink: (
+                                    <button
+                                        className="hover:underline text-info"
+                                        onClick={() => openExternalLink('https://dotnet.microsoft.com/download')}
+                                    />
+                                ),
+                                Icon: <ExternalLink className="w-4 inline-block" />
+                            }}
+                        />
                     </li>
                 </ul>
             </div>

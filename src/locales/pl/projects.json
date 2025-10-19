@@ -1,0 +1,89 @@
+{
+  "title": "Projekty",
+  "buttons": {
+    "add": "Dodaj",
+    "newProject": "Nowy projekt",
+    "addProject": "Dodaj projekt",
+    "createProject": "Utwórz projekt",
+    "refresh": "Odśwież",
+    "launch": "Uruchom",
+    "changeEditor": "Zmień edytor"
+  },
+  "search": {
+    "placeholder": "Szukaj"
+  },
+  "table": {
+    "name": "Nazwa",
+    "modified": "Zmodyfikowany",
+    "editor": "Edytor",
+    "version": "Wersja",
+    "lastOpened": "Ostatnio otwierany",
+    "actions": "Akcje",
+    "invalidProject": "Ten projekt jest nieprawidłowy, sprawdź lokalizacje projektu i edytora!",
+    "dotNetProject": "To jest projekt .Net",
+    "prerelease": "Używa wersji testowej edytora Godot",
+    "windowedMode": "Ten projekt otwiera się w trybie okienkowym"
+  },
+  "addProject": {
+    "selectFile": "Wybierz plik projektu",
+    "godotProject": "Projekt Godot",
+    "errors": {
+      "projectExists": "Projekt '{{path}}' już istnieje",
+      "invalidPath": "Nieprawidłowa ścieżka projektu",
+      "invalidProjectFile": "Nieprawidłowy plik project.godot",
+      "nameExists": "Projekt o nazwie '{{name}}' już istnieje\nZmień nazwę projektu w 'project.godot' lub usuń istniejący.",
+      "invalidRenderer": "Nieprawidłowy plik projektu",
+      "invalidConfigVersion": "Nieprawidłowa wersja konfiguracji project.godot.\nObsługiwana jest tylko wersja konfiguracji 5",
+      "noStableReleases": "Nie znaleziono zainstalowanych stabilnych wydań dla Godot {{version}}.x\nZainstaluj stabilne wydanie dla Godot {{version}}.x, a następnie spróbuj ponownie dodać projekt.",
+      "noDotNetRelease": "Projekt wydaje się być projektem .NET, ale nie znaleziono edytora z wydaniem .NET",
+      "noCompatibleRelease": "Nie znaleziono zainstalowanych wydań dla Godot {{version}}.x obsługujących config_version {{configVersion}}."
+    }
+  },
+  "messages": {
+    "noProjects": "Nie znaleziono projektów",
+    "noReleases": "Brak zainstalowanych wydań.",
+    "goToInstalls": "Przejdź do instalacji.",
+    "noReleasesCta": "Brak jeszcze zainstalowanych wydań. <Link>Przejdź do instalacji</Link>",
+    "projectAdded": "Projekt został pomyślnie dodany",
+    "projectRemoved": "Projekt usunięty",
+    "editorChanged": "Edytor został pomyślnie zmieniony",
+    "invalidProject": "Ten projekt jest nieprawidłowy, sprawdź lokalizacje projektu i edytora!",
+    "monoProject": "To jest projekt .NET",
+    "prereleaseVersion": "Używa wersji testowej edytora Godot",
+    "waitingForDialog": "Oczekiwanie na okno dialogowe dodawania projektu...",
+    "needReleaseInstalled": "Musisz mieć zainstalowane co najmniej jedno wydanie, aby dodać projekt",
+    "addProjectError": "Coś poszło nie tak podczas dodawania projektu",
+    "setEditorError": "Coś poszło nie tak podczas ustawiania edytora projektu",
+    "projectNotValid": "Projekt jest nieprawidłowy, upewnij się, że projekt i wydanie są prawidłowe na twoim komputerze."
+  },
+  "changeEditor": {
+    "errors": {
+      "projectNotFound": "Nie znaleziono projektu",
+      "invalidEditorVersion": "Nieprawidłowa wersja edytora",
+      "differentMajorVersion": "Nie można użyć innej wersji głównej edytora\nAby chronić swój projekt, zobacz oficjalny przewodnik migracji na https://godotengine.org"
+    }
+  },
+  "createProject": {
+    "title": "Nowy projekt",
+    "projectName": "Nazwa projektu",
+    "projectPath": "Ścieżka projektu",
+    "selectVersion": "Wybierz wersję Godot",
+    "renderer": "Renderer",
+    "editNow": "Edytuj teraz",
+    "setupVSCode": "Skonfiguruj Visual Studio Code jako edytor tekstu",
+    "vscodeNotInstalled": "Visual Studio Code nie jest zainstalowany na tym komputerze",
+    "noVersionsInstalled": "Brak zainstalowanych wersji Godot",
+    "errors": {
+      "nameRequired": "Nazwa projektu jest wymagana",
+      "pathRequired": "Ścieżka projektu jest wymagana",
+      "invalidPath": "Nieprawidłowa ścieżka projektu"
+    }
+  },
+  "searchPlaceholder": "Szukaj projektów...",
+  "editorSettings": {
+    "title": "Ustawienia Edytora",
+    "alreadyExists": "Ustawienia edytora dla {{version}} [.NET] już istnieją i nie wprowadzono żadnych zmian, aby chronić twoją konfigurację.",
+    "switchingToDotNet": "Jeśli przełączasz się na wersję .NET z GDScript, możesz ręcznie skonfigurować Zewnętrzny Edytor w <strong>Ustawienia Edytora -> Dotnent</strong> (przełącznik zaawansowany: true).",
+    "readMore": "Czytaj więcej"
+  }
+}

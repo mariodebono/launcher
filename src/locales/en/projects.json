@@ -1,0 +1,89 @@
+{
+  "title": "Projects",
+  "buttons": {
+    "add": "Add",
+    "newProject": "New Project",
+    "addProject": "Add Project",
+    "createProject": "Create Project",
+    "refresh": "Refresh",
+    "launch": "Launch",
+    "changeEditor": "Change Editor"
+  },
+  "search": {
+    "placeholder": "Search"
+  },
+  "table": {
+    "name": "Name",
+    "modified": "Modified",
+    "editor": "Editor",
+    "version": "Version",
+    "lastOpened": "Last Opened",
+    "actions": "Actions",
+    "invalidProject": "This project is invalid, check project and editor locations!",
+    "dotNetProject": "This is a .Net Project",
+    "prerelease": "Using a pre-release Godot editor version",
+    "windowedMode": "This project is open in windowed mode"
+  },
+  "addProject": {
+    "selectFile": "Select Project File",
+    "godotProject": "Godot Project",
+    "errors": {
+      "projectExists": "Project '{{path}}' already exists",
+      "invalidPath": "Invalid project path",
+      "invalidProjectFile": "Invalid project.godot file",
+      "nameExists": "Project with name '{{name}}' already exists\nPlease rename the project in 'project.godot' or remove the existing one.",
+      "invalidRenderer": "Invalid project file",
+      "invalidConfigVersion": "Invalid project.godot config_version.\nOnly config version 5 is supported",
+      "noStableReleases": "No installed Stable releases found for Godot {{version}}.x\nPlease install a stable release for Godot {{version}}.x, then try adding the project again.",
+      "noDotNetRelease": "Project seems to be a .NET project but no Editor with .NET release found",
+      "noCompatibleRelease": "No installed releases found for Godot {{version}}.x that support config_version {{configVersion}}."
+    }
+  },
+  "messages": {
+    "noProjects": "No projects found",
+    "noReleases": "No releases installed.",
+    "goToInstalls": "Go to installs.",
+    "noReleasesCta": "No releases installed yet. <Link>Go to installs</Link>",
+    "projectAdded": "Project added successfully",
+    "projectRemoved": "Project removed",
+    "editorChanged": "Editor changed successfully",
+    "invalidProject": "This project is invalid, check project and editor locations!",
+    "monoProject": "This is a .NET Project",
+    "prereleaseVersion": "Using a pre-release Godot editor version",
+    "waitingForDialog": "Waiting for dialog to add project...",
+    "needReleaseInstalled": "You need at least a release installed to add a project",
+    "addProjectError": "Something went wrong when adding project",
+    "setEditorError": "Something went wrong when setting project editor",
+    "projectNotValid": "Project is not valid, please make sure the project and release are valid on your computer."
+  },
+  "changeEditor": {
+    "errors": {
+      "projectNotFound": "Project not found",
+      "invalidEditorVersion": "Invalid editor version",
+      "differentMajorVersion": "Cannot use a different major version of the editor\nTo protect your project see official migration guide on https://godotengine.org"
+    }
+  },
+  "createProject": {
+    "title": "New Project",
+    "projectName": "Project Name",
+    "projectPath": "Project Path",
+    "selectVersion": "Select Godot Version",
+    "renderer": "Renderer",
+    "editNow": "Edit now",
+    "setupVSCode": "Setup Visual Studio Code as Text Editor",
+    "vscodeNotInstalled": "Visual Studio Code is not installed on this computer",
+    "noVersionsInstalled": "No Godot versions installed",
+    "errors": {
+      "nameRequired": "Project name is required",
+      "pathRequired": "Project path is required",
+      "invalidPath": "Invalid project path"
+    }
+  },
+  "searchPlaceholder": "Search projects...",
+  "editorSettings": {
+    "title": "Editor Settings",
+    "alreadyExists": "Editor settings for {{version}} [.NET] already exists and no changes where made to protect your setup.",
+    "switchingToDotNet": "If you are switching to a .NET version from GDScript, you can manually configure External Editor from <strong>Editor Settings -> Dotnent</strong> (advanced switch: true).",
+    "readMore": "Read More"
+  }
+}

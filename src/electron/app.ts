@@ -1,6 +1,6 @@
 import * as fs from 'node:fs';
 
-import { ipcMainHandler } from './utils.js';
+import { ipcMainHandler, isDev } from './utils.js';
 import {
     getConfigDir,
     getDefaultPrefs,
@@ -8,38 +8,45 @@ import {
     setAutoCheckUpdates,
 } from './utils/prefs.utils.js';
 
+import { app, shell } from 'electron';
+import { checkForUpdates, installUpdateAndRestart } from './autoUpdater.js';
+import { checkAndUpdateProjects, checkAndUpdateReleases } from './checks.js';
+import { addProject } from './commands/addProject.js';
+import { createProject } from './commands/createProject.js';
 import { getInstalledTools } from './commands/installedTools.js';
-import {
-    getUserPreferences,
-    setUserPreferences,
-} from './commands/userPreferences.js';
-import {
-    openDirectoryDialog,
-    openFileDialog,
-    openShellFolder,
-} from './commands/shellFolders.js';
-import {
-    getAvailablePrereleases,
-    getAvailableReleases,
-    getInstalledReleases,
-    openProjectManager,
-} from './commands/releases.js';
 import { installRelease } from './commands/installRelease.js';
-import { removeRelease } from './commands/removeRelease.js';
+import { showProjectMenu, showReleaseMenu } from './commands/menuCommands.js';
 import {
     checkProjectIsValid,
     getProjectsDetails,
     launchProject,
     removeProject,
 } from './commands/projects.js';
+import {
+    getAvailablePrereleases,
+    getAvailableReleases,
+    getInstalledReleases,
+    openProjectManager,
+} from './commands/releases.js';
+import { removeRelease } from './commands/removeRelease.js';
 import { setProjectEditor } from './commands/setProjectEditor.js';
-import { createProject } from './commands/createProject.js';
-import { addProject } from './commands/addProject.js';
-import { checkAndUpdateProjects, checkAndUpdateReleases } from './checks.js';
-import { showProjectMenu, showReleaseMenu } from './commands/menuCommands.js';
-import { app, shell } from 'electron';
+import {
+    openDirectoryDialog,
+    openFileDialog,
+    openShellFolder,
+} from './commands/shellFolders.js';
+import {
+    getUserPreferences,
+    setUserPreferences,
+} from './commands/userPreferences.js';
+import { refreshMenu } from './helpers/menu.helper.js';
+import {
+    changeLanguage,
+    getAllTranslations,
+    getAvailableLanguages,
+    getCurrentLanguage,
+} from './i18n/index.js';
 import { setAutoStart } from './utils/platform.utils.js';
-import { checkForUpdates, installUpdateAndRestart } from './autoUpdater.js';
 
 // create default folder if not exist
 async function createDefaultFolder() {
@@ -63,6 +70,9 @@ async function createDefaultFolder() {
 
 export { createDefaultFolder }; // Export the function
 
+// Export i18n initialization for use in main.ts
+export { initI18n } from './i18n/index.js';
+
 export function registerHandlers() {
     // ##### user-preferences #####
 
@@ -73,7 +83,8 @@ export function registerHandlers() {
 
     ipcMainHandler(
         'set-user-preferences',
-        async (_, newPrefs: UserPreferences) => await setUserPreferences(newPrefs)
+        async (_, newPrefs: UserPreferences) =>
+            await setUserPreferences(newPrefs)
     );
 
     ipcMainHandler(
@@ -190,14 +201,22 @@ export function registerHandlers() {
 
     ipcMainHandler(
         'open-file-dialog',
-        (_, defaultPath: string, title: string, filters: Electron.FileFilter[]) =>
-            openFileDialog(defaultPath, title, filters)
+        (
+            _,
+            defaultPath: string,
+            title: string,
+            filters: Electron.FileFilter[]
+        ) => openFileDialog(defaultPath, title, filters)
     );
 
     ipcMainHandler(
         'open-directory-dialog',
-        (_, defaultPath: string, title?: string, filters?: Electron.FileFilter[]) =>
-            openDirectoryDialog(defaultPath, title, filters)
+        (
+            _,
+            defaultPath: string,
+            title?: string,
+            filters?: Electron.FileFilter[]
+        ) => openDirectoryDialog(defaultPath, title, filters)
     );
 
     ipcMainHandler('show-project-menu', (_, project: ProjectDetails) =>
@@ -210,7 +229,10 @@ export function registerHandlers() {
 
     // ##### tools #####
 
-    ipcMainHandler('get-installed-tools', async () => await getInstalledTools());
+    ipcMainHandler(
+        'get-installed-tools',
+        async () => await getInstalledTools()
+    );
 
     ipcMainHandler('relaunch-app', async () => {
         app.relaunch();
@@ -225,5 +247,39 @@ export function registerHandlers() {
 
     ipcMainHandler('get-app-version', async () => {
         return app.getVersion();
+    });
+
+    // ##### i18n #####
+
+    ipcMainHandler('i18n:get-current-language', async () => {
+        return getCurrentLanguage();
+    });
+
+    ipcMainHandler('i18n:get-available-languages', async () => {
+        return getAvailableLanguages();
+    });
+
+    ipcMainHandler(
+        'i18n:get-all-translations',
+        async (_, language?: string) => {
+            return getAllTranslations(language);
+        }
+    );
+
+    ipcMainHandler('i18n:change-language', async (_, lang: string) => {
+        await changeLanguage(lang);
+
+        // Refresh menu to update translations
+        // only in dev mode to avoid disrupting user experience
+        if (isDev()) {
+            refreshMenu();
+        }
+
+        // Update user preferences
+        const prefs = await getUserPreferences();
+        await setUserPreferences({ ...prefs, language: lang });
+
+        // Return new translations for renderer
+        return getAllTranslations(lang);
     });
 }

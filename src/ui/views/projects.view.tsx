@@ -1,5 +1,6 @@
 import logger from 'electron-log';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
@@ -18,6 +19,7 @@ TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo('en-US');
 
 export const ProjectsView: React.FC = () => {
+    const { t } = useTranslation('projects');
     const [textSearch, setTextSearch] = useState<string>('');
     const [createOpen, setCreateOpen] = useState<boolean>(false);
 
@@ -60,14 +62,14 @@ export const ProjectsView: React.FC = () => {
     const onAddProject = async () => {
         if (addingProject) return;
         setAddingProject(true);
-        const result = await window.electron.openFileDialog(preferences!.projects_location!, 'Select Project File', [{ name: 'Godot Project', extensions: ['godot'] }]);
+        const result = await window.electron.openFileDialog(preferences!.projects_location!, t('addProject.selectFile'), [{ name: t('addProject.godotProject'), extensions: ['godot'] }]);
         setAddingProject(false);
 
         if (!result.canceled) {
             const projectPath = result.filePaths[0];
 
             if (installedReleases.length === 0) {
-                addAlert('Error', 'You need at least a release installed to add a project', <TriangleAlert className="stroke-error" />);
+                addAlert(t('common:error'), t('messages.needReleaseInstalled'), <TriangleAlert className="stroke-error" />);
                 return;
             }
 
@@ -75,7 +77,7 @@ export const ProjectsView: React.FC = () => {
             logger.info(addResult);
             if (!addResult.success) {
                 logger.error(addResult.error);
-                addAlert('Error', addResult.error || 'Something went wrong when adding project', <TriangleAlert className="stroke-error" />);
+                addAlert(t('common:error'), addResult.error || t('messages.addProjectError'), <TriangleAlert className="stroke-error" />);
                 return;
             }
             else {
@@ -83,15 +85,14 @@ export const ProjectsView: React.FC = () => {
                     const { settingsCreated, shouldReportOnSettings } = addResult.additionalInfo as EditorSettingsInfo;
                     if (!settingsCreated && shouldReportOnSettings && addResult.newProject?.release.mono) {
 
-                        addAlert('Editor Settings', (
+                        addAlert(t('editorSettings.title'), (
                             <div className='flex flex-col gap-2'>
-                                <p>Editor settings for {addResult.newProject?.release.version} [.NET] already exists and no changes where made to protect your setup.</p>
-                                <p>If you are switching to a .NET version from GDScript, you can manually configure
-                                    External Editor from <strong>Editor Settings -&gt; Dotnent</strong> (advanced switch: true).</p>
+                                <p>{t('editorSettings.alreadyExists', { version: addResult.newProject?.release.version })}</p>
+                                <p dangerouslySetInnerHTML={{ __html: t('editorSettings.switchingToDotNet') }} />
                                 <button
                                     onClick={() => openExternalLink(`https://docs.godotengine.org/en/${addResult.newProject?.release.version_number.toString()}/tutorials/scripting/c_sharp/c_sharp_basics.html#configuring-an-external-editor`)}
                                     className="btn-link flex-row items-center text-sm m-0 p-0 flex gap-1">
-                                    Read More<ExternalLink className="h-4 w-4 m-0 p-0 " />
+                                    {t('editorSettings.readMore')}<ExternalLink className="h-4 w-4 m-0 p-0 " />
                                 </button>
                             </div>
                         ), <TriangleAlert className="stroke-warning" />);
@@ -108,7 +109,7 @@ export const ProjectsView: React.FC = () => {
         try {
             const result = await setProjectEditor(project, release);
             if (!result.success) {
-                addAlert('Error', result.error || 'Something went wrong when setting project editor');
+                addAlert(t('common:error'), result.error || t('messages.setEditorError'));
                 return;
             }
             else {
@@ -116,15 +117,14 @@ export const ProjectsView: React.FC = () => {
                     const { settingsCreated, shouldReportOnSettings } = result.additionalInfo as EditorSettingsInfo;
                     if (!settingsCreated && shouldReportOnSettings && release.mono) {
 
-                        addAlert('Editor Settings', (
+                        addAlert(t('editorSettings.title'), (
                             <div className='flex flex-col gap-2'>
-                                <p>Editor settings for {release.version} [.NET] already exists and no changes where made to protect your setup.</p>
-                                <p>If you are switching to a .NET version from GDScript, you can manually configure
-                                    External Editor from <strong>Editor Settings -&gt; Dotnent</strong> (advanced switch: true).</p>
+                                <p>{t('editorSettings.alreadyExists', { version: release.version })}</p>
+                                <p dangerouslySetInnerHTML={{ __html: t('editorSettings.switchingToDotNet') }} />
                                 <button
                                     onClick={() => openExternalLink(`https://docs.godotengine.org/en/${release.version_number.toString()}/tutorials/scripting/c_sharp/c_sharp_basics.html#configuring-an-external-editor`)}
                                     className="btn-link flex-row items-center text-sm m-0 p-0 flex gap-1">
-                                    Read More<ExternalLink className="h-4 w-4 m-0 p-0 " />
+                                    {t('editorSettings.readMore')}<ExternalLink className="h-4 w-4 m-0 p-0 " />
                                 </button>
                             </div>
                         ), <TriangleAlert className="stroke-warning" />);
@@ -142,7 +142,7 @@ export const ProjectsView: React.FC = () => {
             const result = await launchProject(project);
             if (!result) {
                 await checkAllReleasesValid();
-                addAlert('Error', 'Project is not valid, please make sure the project and release are valid on your computer.');
+                addAlert(t('common:error'), t('messages.projectNotValid'));
             }
         }
 
@@ -191,7 +191,7 @@ export const ProjectsView: React.FC = () => {
             {
                 addingProject &&
                 <div className="absolute inset-0 z-20 w-full h-full bg-black/80 flex flex-col items-center justify-center">
-                    <p className="loading loading-infinity"></p><p>Waiting for dialog to add project...</p>
+                    <p className="loading loading-infinity"></p><p>{t('messages.waitingForDialog')}</p>
                 </div>
             }
 
@@ -207,18 +207,18 @@ export const ProjectsView: React.FC = () => {
                 <div className="flex flex-col gap-2 w-full">
                     <div className="flex flex-row justify-between items-start">
                         <div className="flex flex-col gap-1">
-                            <h1 data-testid="projectsTitle" className="text-2xl">Projects</h1>
+                            <h1 data-testid="projectsTitle" className="text-2xl">{t('title')}</h1>
                             <p className="badge text-base-content/50">{preferences?.projects_location}</p>
                         </div>
                         <div className="flex gap-2">
-                            <button disabled={installedReleases.length < 1} data-testid="btnProjectAdd" onClick={() => onAddProject()} className="btn btn-neutral">Add</button>
-                            <button disabled={installedReleases.length < 1} data-testid="btnProjectCreate" className="btn btn-primary" onClick={() => setCreateOpen(true)}>New Project</button>
+                            <button disabled={installedReleases.length < 1} data-testid="btnProjectAdd" onClick={() => onAddProject()} className="btn btn-neutral">{t('buttons.add')}</button>
+                            <button disabled={installedReleases.length < 1} data-testid="btnProjectCreate" className="btn btn-primary" onClick={() => setCreateOpen(true)}>{t('buttons.newProject')}</button>
                         </div>
                     </div>
                     <div className="flex flex-row justify-end my-2 items-center">
                         <input
                             type="text"
-                            placeholder="Search"
+                            placeholder={t('search.placeholder')}
                             className="input input-bordered w-full max-w-xs"
                             onChange={(e) => setTextSearch(e.target.value)}
                             value={textSearch}
@@ -231,7 +231,19 @@ export const ProjectsView: React.FC = () => {
                         }
                     </div>
                 </div>
-                {(!releaseLoading && installedReleases.length < 1) && <div className="text-warning flex gap-2"><TriangleAlert className="stroke-warning" />No releases installed.<a onClick={() => setCurrentView('installs')} className="underline cursor-pointer">Go to installs.</a></div>}
+
+                {(!releaseLoading && installedReleases.length < 1) && (
+                    <div className="text-warning flex gap-2">
+                        <TriangleAlert className="stroke-warning" />
+                        <Trans
+                            ns="projects"
+                            i18nKey="messages.noReleasesCta"
+                            components={{
+                                Link: <a onClick={() => setCurrentView('installs')} className="underline cursor-pointer" />
+                            }}
+                        />
+                    </div>
+                )}
                 <div className="divider m-0"></div>
                 {loading && <div className="loading loading-dots loading-lg"></div>}
                 {!loading &&
@@ -248,7 +260,7 @@ export const ProjectsView: React.FC = () => {
                                                 setSortData({ field: 'name', order: 'asc' });
                                             }
                                         }}>
-                                            Name
+                                            {t('table.name')}
                                             {getSortIcon('name')}
                                         </label>
                                     </th>
@@ -261,11 +273,11 @@ export const ProjectsView: React.FC = () => {
                                                 setSortData({ field: 'modified', order: 'asc' });
                                             }
                                         }}>
-                                            Modified
+                                            {t('table.modified')}
                                             {getSortIcon('modified')}
                                         </label>
                                     </th>
-                                    <th className="w-60 min-w-60">Editor</th>
+                                    <th className="w-60 min-w-60">{t('table.editor')}</th>
                                     <th className=""></th>
                                 </tr>
                             </thead>
@@ -278,7 +290,7 @@ export const ProjectsView: React.FC = () => {
                                                     <div className="absolute bg-black/50 inset-0 z-10 flex items-center justify-center rounded-lg "><div className="loading loading-bars"></div></div>
                                                 }
                                                 <div className="font-bold flex text-lg gap-2 items-center justify-start">
-                                                    {!row.valid && <span className="tooltip tooltip-right" data-tip="This project is invalid, check project and editor locations!">
+                                                    {!row.valid && <span className="tooltip tooltip-right" data-tip={t('table.invalidProject')}>
                                                         <TriangleAlert className="stroke-warning" />
                                                     </span>
                                                     }
@@ -286,17 +298,17 @@ export const ProjectsView: React.FC = () => {
                                                     </button>
 
                                                     {row.release.mono &&
-                                                        <p className='tooltip tooltip-right tooltip-primary flex items-center' data-tip="This is a .Net Project">
+                                                        <p className='tooltip tooltip-right tooltip-primary flex items-center' data-tip={t('table.dotNetProject')}>
                                                             <span className="badge badge-outline text-xs text-base-content/50 ">c#</span>
                                                         </p>
                                                     }
                                                     {row.release.prerelease &&
-                                                        <p className='tooltip tooltip-right right-0 tooltip-secondary flex items-center' data-tip="Using a pre-release Godot editor version">
+                                                        <p className='tooltip tooltip-right right-0 tooltip-secondary flex items-center' data-tip={t('table.prerelease')}>
                                                             <span className="badge badge-secondary badge-outline text-xs text-base-content/50 ">pr</span>
                                                         </p>
                                                     }
                                                     {row.open_windowed &&
-                                                        <p className='tooltip tooltip-right tooltip-primary flex items-center' data-tip="This project is open in windowed mode">
+                                                        <p className='tooltip tooltip-right tooltip-primary flex items-center' data-tip={t('table.windowedMode')}>
                                                             <span className="badge badge-outline text-xs text-base-content/50">w</span>
                                                         </p>
                                                     }
@@ -336,7 +348,7 @@ export const ProjectsView: React.FC = () => {
                                             <td className="p-0 pr-2">
                                                 <button
                                                     onClick={(e) => onProjectMoreOptions(e, row)}
-                                                    className="select-none outline-none relative flex items-center justify-center w-10 h-10 hover:bg-base-content/20 rounded-lg"                        >
+                                                    className="select-none outline-none relative flex items-center justify-center w-10 h-10 hover:bg-base-content/20 rounded-lg">
                                                     <EllipsisVertical />
                                                 </button >
                                             </td>
