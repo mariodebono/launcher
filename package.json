@@ -1,7 +1,7 @@
 {
     "name": "godot-launcher",
     "private": true,
-    "version": "1.4.0",
+    "version": "1.5.0",
     "description": "Godot Launcher is a companion app for managing Godot projects with per-project editor settings.",
     "keywords": [
         "godot",
@@ -84,7 +84,7 @@
         "cross-env": "^10.1.0",
         "daisyui": "^4.12.24",
         "electron": "^38.3.0",
-        "electron-builder": "^26.0.12",
+        "electron-builder": "^26.1.0",
         "eslint": "^9.38.0",
         "eslint-plugin-react-hooks": "^7.0.0",
         "eslint-plugin-react-refresh": "^0.4.24",

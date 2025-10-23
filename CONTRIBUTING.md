@@ -8,6 +8,7 @@ The Godot Launcher website has a dedicated [contributing section](https://godotl
 
 - [Reporting Bugs](#reporting-bugs)
 - [Proposing Features](#proposing-features)
+- [Contributing Translations](#contributing-translations)
 - [Contributing Pull Requests](#contributing-pull-requests)
 
 ## Reporting Bugs
@@ -37,6 +38,18 @@ Please follow the template instructions.
 
 ---
 
+## Contributing Translations
+
+Our interface translations were initially seeded with AI-generated content, so every language benefits from human review. If you spot awkward phrasing or want to add a new locale, we would love your help.
+
+- Start with the detailed [Contributing Translations guide](CONTRIBUTING_TRANSLATIONS.md) for setup, required files, and testing tips.  
+- Improvements of existing strings, terminology fixes, and typo corrections are all valuable contributions—no change is too small.  
+- When adding a new language, remember to copy all locale namespaces, keep JSON keys intact, and register the language in the selector component as described in the guide.
+
+Once you've verified the UI locally, open a PR so we can review and ship your updates to the community.
+
+---
+
 ## Contributing Pull Requests
 
 Thank you for your interest in contributing! Here are a few things to keep in mind before submitting a pull request (PR):
@@ -62,18 +75,20 @@ For bug fixes, if you're unsure about the best solution, discuss it first on [Di
 - Follow the existing project structure and conventions.  
 - Keep commit history clean—use **squash** and **rebase** to tidy up before submitting.  
 - Use meaningful commit messages (see below).  
+- Add user-facing text to **all locale files** (`src/locales/<lang>`) so translations stay in sync.  
 
 ### Writing Good Commit Messages
 
-A well-structured commit message helps with code history and future debugging. Follow these guidelines:
+A well-structured commit message helps with code history and future debugging. We follow the [Conventional Commits](https://www.conventionalcommits.org/) format so changelog automation stays reliable. Follow these guidelines:
 
+- Start the subject line with a Conventional Commit type such as `feat`, `fix`, `chore`, or `docs`, and add a scope when it clarifies the change (e.g., `feat(installs): ...`).  
 - Keep the first line **concise and descriptive** (under 72 characters if possible).  
-- Use **imperative form** (e.g., `Fix bug in project settings`, `Add auto-update feature`).  
+- Write the summary in **imperative form** (e.g., `fix: handle custom project paths`, `feat: add auto-update toggle`).  
 - If needed, provide more details in a second paragraph.  
 
 **Examples of good commit messages:**
 ```
-Fix issue with incorrect version detection on startup
+fix: correct version detection on startup
 
 Previously, the launcher failed to detect custom Godot versions correctly
 due to missing path validation. This update adds proper validation and 
@@ -81,7 +96,7 @@ fallbacks.
 ```
 
 ```
-Add quick project access from system tray
+feat: add quick project access from system tray
 
 Users can now right-click the tray icon to instantly open recent projects.
 This improves usability and saves time navigating the project list.
