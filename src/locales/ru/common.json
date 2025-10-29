@@ -7,7 +7,11 @@
     "delete": "Удалить",
     "continue": "Продолжить",
     "skip": "Пропустить",
-    "select": "Выбрать"
+    "select": "Выбрать",
+    "retry": "Повторить",
+    "remove": "Удалить",
+    "copyPath": "Копировать путь",
+    "openPath": "Открыть путь"
   },
   "loading": "Загрузка...",
   "saving": "Сохранение...",
@@ -43,6 +47,8 @@
     "badges": {
       "dotnet": ".NET",
       "prerelease": "пререлиз"
-    }
+    },
+    "unavailable": "Unavailable release",
+    "unavailableHint": "Mount the drive or choose a different editor before proceeding."
   }
 }

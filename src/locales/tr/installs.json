@@ -36,7 +36,8 @@
   "status": {
     "installing": "Yükleniyor...",
     "installed": "Kuruldu",
-    "downloading": "İndiriliyor..."
+    "downloading": "İndiriliyor...",
+    "unavailable": "Kullanılamıyor"
   },
   "messages": {
     "noReleases": "Henüz kurulu sürüm yok.",
@@ -47,7 +48,14 @@
     "installing": "Yükleniyor...",
     "downloadProgress": "İndiriliyor: %{{percent}}",
     "installSuccess": "Editör başarıyla yüklendi",
-    "uninstallSuccess": "Editör kaldırıldı"
+    "uninstallSuccess": "Editör kaldırıldı",
+    "unavailableHint": "Editör yolu erişilebilir değil. Depolama aygıtını bağlayıp tekrar deneyin veya sürümü kaldırın.",
+    "revalidating": "Yüklü sürümler doğrulanıyor...",
+    "revalidated": "Doğrulama tamamlandı.",
+    "revalidatedRelease": "{{version}} tekrar kullanılabilir durumda.",
+    "revalidationFailed": "Doğrulama başarısız oldu. Depolama aygıtını kontrol edin ve tekrar deneyin.",
+    "revalidationStillMissing": "Doğrulama tamamlandı ancak {{version}} hâlâ kullanılamıyor. Yeniden denemeden önce {{path}} yolunun erişilebilir olduğundan emin olun.",
+    "revalidationStillMissingNoPath": "Doğrulama tamamlandı ancak {{version}} hâlâ kullanılamıyor. Yeniden denemeden önce depolama aygıtının takılı olduğundan emin olun."
   },
   "install": {
     "title": "Godot Editör Yükle",

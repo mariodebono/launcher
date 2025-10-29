@@ -36,7 +36,8 @@
   "status": {
     "installing": "インストール中...",
     "installed": "インストール済み",
-    "downloading": "ダウンロード中..."
+    "downloading": "ダウンロード中...",
+    "unavailable": "利用できません"
   },
   "messages": {
     "noReleases": "リリースがまだインストールされていません。",
@@ -47,7 +48,14 @@
     "installing": "インストール中...",
     "downloadProgress": "ダウンロード中：{{percent}}%",
     "installSuccess": "エディタが正常にインストールされました",
-    "uninstallSuccess": "エディタがアンインストールされました"
+    "uninstallSuccess": "エディタがアンインストールされました",
+    "unavailableHint": "エディターのパスにアクセスできません。ストレージデバイスをマウントしてから再試行するか、リリースをアンインストールしてください。",
+    "revalidating": "インストール済みリリースを検証しています...",
+    "revalidated": "検証が完了しました。",
+    "revalidatedRelease": "{{version}} は再び利用可能になりました。",
+    "revalidationFailed": "検証に失敗しました。ストレージデバイスを確認してから再試行してください。",
+    "revalidationStillMissing": "検証は完了しましたが {{version}} はまだ利用できません。再試行する前に {{path}} がアクセス可能か確認してください。",
+    "revalidationStillMissingNoPath": "検証は完了しましたが {{version}} はまだ利用できません。再試行する前にストレージデバイスがマウントされているか確認してください。"
   },
   "install": {
     "title": "Godotエディタをインストール",

@@ -36,7 +36,8 @@
   "status": {
     "installing": "Installazione in corso...",
     "installed": "Installata",
-    "downloading": "Download in corso..."
+    "downloading": "Download in corso...",
+    "unavailable": "Non disponibile"
   },
   "messages": {
     "noReleases": "Ancora nessuna versione installata.",
@@ -47,7 +48,14 @@
     "installing": "Installazione in corso...",
     "downloadProgress": "Download: {{percent}}%",
     "installSuccess": "Editor installato correttamente",
-    "uninstallSuccess": "Editor disinstallato"
+    "uninstallSuccess": "Editor disinstallato",
+    "unavailableHint": "Il percorso dell'editor non è accessibile. Monta il dispositivo di archiviazione e riprova, oppure disinstalla la versione.",
+    "revalidating": "Verifica delle versioni installate...",
+    "revalidated": "Verifica completata.",
+    "revalidatedRelease": "{{version}} è di nuovo disponibile.",
+    "revalidationFailed": "Verifica non riuscita. Controlla il dispositivo di archiviazione e riprova.",
+    "revalidationStillMissing": "La verifica è terminata ma {{version}} è ancora indisponibile. Assicurati che {{path}} sia accessibile prima di riprovare.",
+    "revalidationStillMissingNoPath": "La verifica è terminata ma {{version}} è ancora indisponibile. Assicurati che il dispositivo di archiviazione sia montato prima di riprovare."
   },
   "install": {
     "title": "Installa editor Godot",

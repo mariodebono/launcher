@@ -36,7 +36,8 @@
   "status": {
     "installing": "安装中...",
     "installed": "已安装",
-    "downloading": "下载中..."
+    "downloading": "下载中...",
+    "unavailable": "不可用"
   },
   "messages": {
     "noReleases": "尚未安装任何发行版本。",
@@ -47,7 +48,14 @@
     "installing": "安装中...",
     "downloadProgress": "下载中：{{percent}}%",
     "installSuccess": "编辑器安装成功",
-    "uninstallSuccess": "编辑器已卸载"
+    "uninstallSuccess": "编辑器已卸载",
+    "unavailableHint": "编辑器路径不可访问。请挂载存储设备后重试，或卸载该版本。",
+    "revalidating": "正在验证已安装的版本...",
+    "revalidated": "验证完成。",
+    "revalidatedRelease": "{{version}} 已再次可用。",
+    "revalidationFailed": "验证失败。请检查存储设备并重试。",
+    "revalidationStillMissing": "验证已完成，但 {{version}} 仍不可用。再次尝试前请确认 {{path}} 可访问。",
+    "revalidationStillMissingNoPath": "验证已完成，但 {{version}} 仍不可用。再次尝试前请确认存储设备已挂载。"
   },
   "install": {
     "title": "安装 Godot 编辑器",

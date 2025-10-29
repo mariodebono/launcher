@@ -7,7 +7,11 @@
     "delete": "Sil",
     "continue": "Devam",
     "skip": "Atla",
-    "select": "Seç"
+    "select": "Seç",
+    "retry": "Tekrar dene",
+    "remove": "Kaldır",
+    "copyPath": "Yolu kopyala",
+    "openPath": "Yolu aç"
   },
   "loading": "Yükleniyor...",
   "saving": "Kaydediliyor...",
@@ -43,6 +47,8 @@
     "badges": {
       "dotnet": ".NET",
       "prerelease": "ön sürüm"
-    }
+    },
+    "unavailable": "Unavailable release",
+    "unavailableHint": "Mount the drive or choose a different editor before proceeding."
   }
 }

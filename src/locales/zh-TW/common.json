@@ -7,7 +7,11 @@
     "delete": "刪除",
     "continue": "繼續",
     "skip": "跳過",
-    "select": "選擇"
+    "select": "選擇",
+    "retry": "重試",
+    "remove": "移除",
+    "copyPath": "複製路徑",
+    "openPath": "開啟路徑"
   },
   "loading": "載入中…",
   "saving": "儲存中…",
@@ -43,6 +47,8 @@
     "badges": {
       "dotnet": ".NET",
       "prerelease": "預先釋出"
-    }
+    },
+    "unavailable": "Unavailable release",
+    "unavailableHint": "Mount the drive or choose a different editor before proceeding."
   }
 }

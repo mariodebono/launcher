@@ -7,7 +7,11 @@
     "delete": "Eliminar",
     "continue": "Continuar",
     "skip": "Saltar",
-    "select": "Selecionar"
+    "select": "Selecionar",
+    "retry": "Tentar de novo",
+    "remove": "Remover",
+    "copyPath": "Copiar caminho",
+    "openPath": "Abrir caminho"
   },
   "loading": "A carregar...",
   "saving": "A guardar...",
@@ -43,6 +47,8 @@
     "badges": {
       "dotnet": ".NET",
       "prerelease": "pré-lançamento"
-    }
+    },
+    "unavailable": "Unavailable release",
+    "unavailableHint": "Mount the drive or choose a different editor before proceeding."
   }
 }
