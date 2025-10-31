@@ -21,9 +21,11 @@
     "actions": "Acciones",
     "invalidProject": "¡Este proyecto es inválido, verifica las ubicaciones del proyecto y del editor!",
     "dotNetProject": "Este es un proyecto .Net",
+    "vsCodeProject": "Visual Studio Code está habilitado como editor externo para este proyecto",
     "prerelease": "Usando una versión preliminar del editor Godot",
     "windowedMode": "Este proyecto se abre en modo ventana",
-    "invalidRelease": "Editor unavailable"
+    "invalidRelease": "Editor unavailable",
+    "gitProject": "El proyecto usa Git para el control de versiones"
   },
   "addProject": {
     "selectFile": "Seleccionar archivo del proyecto",
@@ -65,6 +67,14 @@
       "differentMajorVersion": "No se puede usar una versión mayor diferente del editor\nPara proteger tu proyecto consulta la guía de migración oficial en https://godotengine.org"
     }
   },
+  "toggleVSCode": {
+    "errors": {
+      "projectNotFound": "Proyecto no encontrado",
+      "vscodeNotInstalled": "Visual Studio Code no está instalado en este ordenador.",
+      "missingLaunchPath": "Falta la ruta de inicio de Godot para este proyecto.",
+      "invalidProjectDefinition": "No se pudo determinar la plantilla de configuración del editor para esta versión de Godot."
+    }
+  },
   "createProject": {
     "title": "Nuevo proyecto",
     "projectName": "Nombre del proyecto",
@@ -87,5 +97,11 @@
     "alreadyExists": "La configuración del editor para {{version}} [.NET] ya existe y no se realizaron cambios para proteger tu configuración.",
     "switchingToDotNet": "Si estás cambiando a una versión .NET desde GDScript, puedes configurar manualmente el editor externo desde <strong>Configuración del editor -> Dotnent</strong> (interruptor avanzado: true).",
     "readMore": "Leer más"
+  },
+  "initGit": {
+    "errors": {
+      "projectNotFound": "Proyecto no encontrado",
+      "initFailed": "No se pudo inicializar el repositorio Git."
+    }
   }
 }

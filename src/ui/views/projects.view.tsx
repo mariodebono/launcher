@@ -22,10 +22,14 @@ import { useProjects } from '../hooks/useProjects';
 import { useRelease } from '../hooks/useRelease';
 import { CreateProjectSubView } from './subViews/createProject.subview';
 
+import vscodeIcon from '../assets/icons/vscode.svg';
+import gitIconColor from '../assets/icons/git_icon_color.svg';
+
 TimeAgo.addLocale(en);
 const timeAgo = new TimeAgo('en-US');
 
 export const ProjectsView: React.FC = () => {
+
     const { t } = useTranslation(['projects', 'common']);
     const [textSearch, setTextSearch] = useState<string>('');
     const [createOpen, setCreateOpen] = useState<boolean>(false);
@@ -306,7 +310,7 @@ export const ProjectsView: React.FC = () => {
                                                         field: 'name',
                                                         order:
                                                             sortData.order ===
-                                                            'asc'
+                                                                'asc'
                                                                 ? 'desc'
                                                                 : 'asc',
                                                     });
@@ -334,7 +338,7 @@ export const ProjectsView: React.FC = () => {
                                                         field: 'modified',
                                                         order:
                                                             sortData.order ===
-                                                            'asc'
+                                                                'asc'
                                                                 ? 'desc'
                                                                 : 'asc',
                                                     });
@@ -390,7 +394,38 @@ export const ProjectsView: React.FC = () => {
                                                     {' '}
                                                     {row.name}
                                                 </button>
-
+                                                {row.withVSCode && (
+                                                    <p
+                                                        className="tooltip tooltip-right tooltip-primary flex items-center"
+                                                        data-tip={t(
+                                                            'table.vsCodeProject'
+                                                        )}
+                                                    >
+                                                        <span className="text-xs text-base-content/50 ">
+                                                            <img
+                                                                src={vscodeIcon}
+                                                                className="w-4 h-4"
+                                                                alt="VSCode"
+                                                            />
+                                                        </span>
+                                                    </p>
+                                                )}
+                                                {row.withGit && (
+                                                    <p
+                                                        className="tooltip tooltip-right tooltip-primary flex items-center"
+                                                        data-tip={t(
+                                                            'table.gitProject'
+                                                        )}
+                                                    >
+                                                        <span className="text-xs text-base-content/50 ">
+                                                            <img
+                                                                src={gitIconColor}
+                                                                className="w-4 h-4 "
+                                                                alt="Git"
+                                                            />
+                                                        </span>
+                                                    </p>
+                                                )}
                                                 {row.release.mono && (
                                                     <p
                                                         className="tooltip tooltip-right tooltip-primary flex items-center"
@@ -427,13 +462,6 @@ export const ProjectsView: React.FC = () => {
                                                         </span>
                                                     </p>
                                                 )}
-
-                                                {/* {row.release.valid === false && (
-                                                        <span className="badge badge-warning text-xs flex items-center gap-1">
-                                                            <TriangleAlert className="w-3 h-3" />
-                                                            {t('table.invalidRelease')}
-                                                        </span>
-                                                    )} */}
                                             </div>
                                             <div
                                                 role="button"

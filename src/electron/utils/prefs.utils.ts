@@ -9,6 +9,7 @@ import { createHash } from 'node:crypto';
 import { startAutoUpdateChecks, stopAutoUpdateChecks } from '../autoUpdater.js';
 import { getUserPreferences, setUserPreferences } from '../commands/userPreferences.js';
 import { getDefaultDirs } from './platform.utils.js';
+import { t } from '../i18n/index.js';
 
 const loadedPrefs: UserPreferences | null = null;
 type CachedPrefs = {
@@ -110,11 +111,11 @@ export async function readPrefsFromDisk(prefsPath: string, defaultPrefs: UserPre
         mergedPrefs = { ...defaultPrefs, ...prefs };
     } catch (e) {
         logger.debug('Could not parse user preferences, using defaults', e);
-        // todo: translate message to all locales
+        logger.debug('Corrupted preferences data:', prefsData);
         await dialog.showMessageBox(getMainWindow(), {
             type: 'error',
-            title: 'Error reading preferences',
-            message: 'Could not parse user preferences. Using default preferences.',
+            title: t('dialogs:preferencesError.title'),
+            message: t('dialogs:preferencesError.message'),
             buttons: ['OK'],
         });
     }

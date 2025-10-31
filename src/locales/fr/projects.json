@@ -21,9 +21,11 @@
     "actions": "Actions",
     "invalidProject": "Ce projet est invalide, vérifiez les emplacements du projet et de l'éditeur !",
     "dotNetProject": "Ceci est un projet .Net",
+    "vsCodeProject": "Visual Studio Code est activé comme éditeur externe pour ce projet",
     "prerelease": "Utilise une version préliminaire de l'éditeur Godot",
     "windowedMode": "Ce projet s'ouvre en mode fenêtré",
-    "invalidRelease": "Editor unavailable"
+    "invalidRelease": "Editor unavailable",
+    "gitProject": "Le projet utilise Git pour le contrôle de version"
   },
   "addProject": {
     "selectFile": "Sélectionner le fichier du projet",
@@ -65,6 +67,14 @@
       "differentMajorVersion": "Impossible d'utiliser une version majeure différente de l'éditeur\nPour protéger votre projet, consultez le guide de migration officiel sur https://godotengine.org"
     }
   },
+  "toggleVSCode": {
+    "errors": {
+      "projectNotFound": "Projet introuvable",
+      "vscodeNotInstalled": "Visual Studio Code n'est pas installé sur cet ordinateur.",
+      "missingLaunchPath": "Le chemin de lancement Godot pour ce projet est manquant.",
+      "invalidProjectDefinition": "Impossible de déterminer le modèle de paramètres de l'éditeur pour cette version de Godot."
+    }
+  },
   "createProject": {
     "title": "Nouveau projet",
     "projectName": "Nom du projet",
@@ -87,5 +97,11 @@
     "alreadyExists": "Les paramètres de l'éditeur pour {{version}} [.NET] existent déjà et aucune modification n'a été apportée pour protéger votre configuration.",
     "switchingToDotNet": "Si vous passez à une version .NET depuis GDScript, vous pouvez configurer manuellement l'éditeur externe depuis <strong>Paramètres de l'éditeur -> Dotnent</strong> (commutateur avancé : true).",
     "readMore": "En savoir plus"
+  },
+  "initGit": {
+    "errors": {
+      "projectNotFound": "Projet introuvable",
+      "initFailed": "Échec de l'initialisation du dépôt Git."
+    }
   }
 }
