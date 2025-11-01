@@ -1,3 +1,5 @@
+import logger from 'electron-log';
+
 import {
     CircleX,
     EllipsisVertical,
@@ -108,7 +110,7 @@ export const InstallsView: React.FC = () => {
                 ? (rawPath.endsWith('/')
                     ? rawPath
                     : rawPath.substring(0, rawPath.lastIndexOf('/') + 1)) ||
-                  rawPath
+                rawPath
                 : undefined;
 
             if (candidatePath) {
@@ -161,7 +163,7 @@ export const InstallsView: React.FC = () => {
                 t('messages.revalidationFailed'),
                 <TriangleAlertIcon className="inline w-4 h-4 text-error" />
             );
-            console.error(error);
+            logger.error(error);
         }
     };
 
@@ -212,7 +214,7 @@ export const InstallsView: React.FC = () => {
                 <div className="divider m-0"></div>
 
                 {installedReleases.length < 1 &&
-                downloadingReleases.length < 1 ? (
+                    downloadingReleases.length < 1 ? (
                         <div className="text-warning flex gap-2">
                             <TriangleAlert className="stroke-warning" />
                             <Trans
