@@ -49,6 +49,17 @@
       "installLocation": "Kurulum Konumu",
       "waitingForDialog": "İletişim kutusu bekleniyor..."
     },
+    "clearReleaseCache": {
+        "title": "Sürüm Önbelleğini Yenile",
+        "description": "Önbelleğe alınmış Godot sürüm meta verilerini sil ve GitHub’dan en yeni yapıları çek.",
+        "cta": "Önbelleği yenile",
+        "clearing": "Yenileniyor...",
+        "cooldownNotice": "GitHub hız sınırlarına takılmamak için önbellek yenileme geçici olarak devre dışı bırakıldı.",
+        "successTitle": "Önbellek Başarıyla Yenilendi",
+        "successMessage": "Sürüm listeleri en yeni yapılarla güncellendi.",
+        "errorTitle": "Önbellek Yenilenemedi",
+        "errorMessage": "Sürüm önbelleği yenilenirken bir sorun oluştu. Lütfen daha sonra tekrar deneyin."
+    },
     "checkForUpdates": {
       "title": "Güncellemeleri Kontrol Et",
       "description": "Godot Launcher başladığında güncellemeleri otomatik olarak kontrol et",

@@ -49,6 +49,17 @@
       "installLocation": "Percorso di installazione",
       "waitingForDialog": "In attesa della finestra di dialogo..."
     },
+    "clearReleaseCache": {
+        "title": "Aggiorna La Cache Delle Release",
+        "description": "Elimina i metadati delle release di Godot memorizzati e scarica le build più recenti da GitHub.",
+        "cta": "Aggiorna cache",
+        "clearing": "Aggiornamento...",
+        "cooldownNotice": "L’aggiornamento della cache è temporaneamente disattivato per evitare di raggiungere i limiti di GitHub.",
+        "successTitle": "Cache Aggiornata Con Successo",
+        "successMessage": "Le liste delle release sono state aggiornate con le build più recenti.",
+        "errorTitle": "Impossibile Aggiornare La Cache",
+        "errorMessage": "Si è verificato un problema durante l’aggiornamento della cache delle release. Riprova più tardi."
+    },
     "checkForUpdates": {
       "title": "Controlla aggiornamenti",
       "description": "Controlla automaticamente gli aggiornamenti quando Godot Launcher si avvia",

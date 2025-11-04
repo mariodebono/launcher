@@ -10,6 +10,7 @@ import { GitToolSettings } from '../components/settings/gitToolSettings.componen
 import { LanguageSelector } from '../components/settings/LanguageSelector';
 import { ProjectLaunchAction } from '../components/settings/projectLaunchAction.component';
 import { ProjectsLocation } from '../components/settings/projectsLocation.component';
+import { ClearReleaseCacheControl } from '../components/settings/ClearReleaseCacheControl.component';
 import { VSCodeToolSettings } from '../components/settings/vsCodeToolSettings.component';
 import { WindowsSymlinkSetting } from '../components/settings/WindowsSymlinkSetting.component';
 import { usePreferences } from '../hooks/usePreferences';
@@ -125,6 +126,9 @@ export const SettingsView: React.FC = () => {
                             {/* Installs */}
                             <div className={clsx('flex flex-col h-0 gap-4 ', { 'hidden': (activeTab !== 'installs') })}>
                                 <EditorsLocation />
+                                <div className="divider"></div>
+                                {/* Clear Release Cache */}
+                                <ClearReleaseCacheControl />
 
                             </div>
 
@@ -230,7 +234,7 @@ export const SettingsView: React.FC = () => {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
 
         </>);
 };

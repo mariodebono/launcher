@@ -49,6 +49,17 @@
       "installLocation": "安裝位置",
       "waitingForDialog": "等待對話框…"
     },
+    "clearReleaseCache": {
+        "title": "重新整理發行快取",
+        "description": "移除儲存的 Godot 發行版中繼資料，並從 GitHub 取得最新建置。",
+        "cta": "重新整理快取",
+        "clearing": "重新整理中...",
+        "cooldownNotice": "為避免觸發 GitHub 速率限制，快取重新整理已暫時停用。",
+        "successTitle": "快取重新整理成功",
+        "successMessage": "發行清單已更新為最新建置。",
+        "errorTitle": "無法重新整理快取",
+        "errorMessage": "重新整理發行快取時發生問題，請稍後再試。"
+    },
     "checkForUpdates": {
       "title": "檢查更新",
       "description": "當 Godot 啟動器啟動時自動檢查更新",
