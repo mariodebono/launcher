@@ -105,7 +105,7 @@ export const InstallEditorSubView: React.FC<SubviewProps> = ({ onClose }) => {
 
     return (
         <>
-            <div className="absolute inset-0 z-100 w-full h-full p-4 bg-black/80 z-10"></div >
+            <div className="absolute inset-0 w-full h-full p-4 bg-black/80 z-10"></div >
             <div className="absolute inset-0 px-8 pb-8 flex flex-col w-full h-full overflow-hidden items-center z-20">
                 <div className="flex flex-col p-4 rounded-b-lg overflow-hidden bg-base-300  min-w-[900px]">
 
@@ -138,11 +138,11 @@ export const InstallEditorSubView: React.FC<SubviewProps> = ({ onClose }) => {
                     </div>
                     <div className="flex flex-row justify-between">
                         {/* Tabs */}
-                        <div role="tablist" className="tabs tabs-bordered flex flex-row ">
+                        <div role="tablist" className="tabs tabs-border flex flex-1 flex-row ">
                             <a role="tab"
                                 onClick={() => setTab('RELEASE')}
                                 data-testid="tabInstallsRelease"
-                                className={clsx('tab w-[150px] justify-start', { 'tab-active': (tab === 'RELEASE') })}
+                                className={clsx('tab w-[150px] justify-start pl-4', { 'tab-active': (tab === 'RELEASE') })}
                             >
                                 <div className="flex gap-2 items-center">
                                     {t('tabs.released')}
@@ -156,7 +156,7 @@ export const InstallEditorSubView: React.FC<SubviewProps> = ({ onClose }) => {
                             <a role="tab"
                                 onClick={() => setTab('PRERELEASE')}
                                 data-testid="tabInstallsPrerelease"
-                                className={clsx('tab w-[150px] justify-start', { 'tab-active': (tab === 'PRERELEASE') })}
+                                className={clsx('tab w-[150px] justify-start pl-4', { 'tab-active': (tab === 'PRERELEASE') })}
                             >
                                 <p className="flex gap-2 items-center">
                                     {t('tabs.prerelease')}
@@ -174,7 +174,7 @@ export const InstallEditorSubView: React.FC<SubviewProps> = ({ onClose }) => {
                             className={clsx('tab w-[150px] justify-start', { 'tab-active': (tab === 'INSTALLED') })}
                         >Installed</a> */}
                         </div>
-                        <div className="flex flex-row gap-2">
+                        <div className="flex flex-row gap-2 items-center">
                             <span className="flex items-center tooltip text-info" data-tip={t('filters.showInstalledOnly')}>
 
                                 <label className="swap swap-indeterminate">
