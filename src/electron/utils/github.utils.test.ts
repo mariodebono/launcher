@@ -1,7 +1,7 @@
 import { describe, expect, it, suite, vi } from 'vitest';
-import type { AssetSummary } from '../../types/index.js';
-import { getReleases } from './github.utils';
-import { createAssetSummary, getPlatformAsset } from './releases.utils';
+import type { ReleaseAsset } from '../types/github.js';
+import { getReleases } from './github.utils.js';
+import { createAssetSummary, getPlatformAsset } from './releases.utils.js';
 
 // Mock electron-updater
 vi.mock('electron-updater', () => ({
@@ -22,13 +22,6 @@ vi.mock('electron-updater', () => ({
     },
     UpdateCheckResult: {},
 }));
-
-// Define necessary types for the test file
-type ReleaseAsset = {
-    name: string;
-    browser_download_url: string;
-    [key: string]: any;
-};
 
 // Mock electron
 vi.mock('electron', () => ({
@@ -95,18 +88,27 @@ const allAssetNames = [
 ];
 
 // Utility to create ReleaseAsset objects from just a name
-function makeReleaseAsset(name: string): Partial<ReleaseAsset> {
+function makeReleaseAsset(name: string): ReleaseAsset {
     return {
         name,
         browser_download_url: `https://example.com/${name}`,
-    };
+        content_type: 'application/zip',
+        created_at: new Date().toISOString(),
+        download_count: 0,
+        id: 0,
+        label: null,
+        node_id: '',
+        size: 0,
+        state: 'uploaded',
+        url: '',
+        updated_at: new Date().toISOString(),
+        uploader: null,
+    } satisfies ReleaseAsset;
 }
 
 suite('Github Utils Tests', () => {
-    describe('createAssetSummery (simplified tests)', () => {
+    describe('createAssetSummary (simplified tests)', () => {
         // Generate a subset of ReleaseAssets from allAssetNames
-        const assets: Partial<ReleaseAsset>[] =
-            allAssetNames.map(makeReleaseAsset);
 
         it('tags each asset properly', () => {
             // Just do a quick check for a few samples
