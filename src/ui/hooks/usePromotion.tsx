@@ -2,14 +2,14 @@ import logger from 'electron-log';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { PromotionClickPayload } from '../../types';
 import {
     buildPromotionClickPayload,
     calculateCountdownMeta,
     fetchPromotion,
     isPromotionActive,
-    Promotion,
-    PromotionClickPayload,
-    PromotionCountdownMeta,
+    type Promotion,
+    type PromotionCountdownMeta,
 } from '../promotion';
 
 const TICK_DAY_MS = 60 * 60 * 1000; // 1 hour
@@ -26,7 +26,6 @@ function resolveTickInterval(countdown: PromotionCountdownMeta | null): number {
             return TICK_MINUTE_MS;
         case 'hours':
             return TICK_HOUR_MS;
-        case 'days':
         default:
             return TICK_DAY_MS;
     }
@@ -44,7 +43,9 @@ export type UsePromotionResult = {
 export function usePromotion(): UsePromotionResult {
     const { i18n } = useTranslation();
     const [promotion, setPromotion] = useState<Promotion | null>(null);
-    const [countdown, setCountdown] = useState<PromotionCountdownMeta | null>(null);
+    const [countdown, setCountdown] = useState<PromotionCountdownMeta | null>(
+        null,
+    );
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<unknown>(null);
     const lastLocaleRef = useRef<string | null>(null);
@@ -66,7 +67,7 @@ export function usePromotion(): UsePromotionResult {
             const meta = calculateCountdownMeta(currentPromotion, now);
             setCountdown(meta);
         },
-        []
+        [],
     );
 
     const load = useCallback(async () => {
@@ -103,11 +104,11 @@ export function usePromotion(): UsePromotionResult {
         updateCountdown(promotion);
         const intervalId = window.setInterval(
             () => updateCountdown(promotion),
-            resolveTickInterval(countdown)
+            resolveTickInterval(countdown),
         );
 
         return () => window.clearInterval(intervalId);
-    }, [promotion, countdown?.mode, updateCountdown]);
+    }, [promotion, countdown?.mode, updateCountdown, countdown]);
 
     const buildClickPayload = useCallback(() => {
         if (!promotion) {
@@ -126,6 +127,6 @@ export function usePromotion(): UsePromotionResult {
             refresh: load,
             buildClickPayload,
         }),
-        [promotion, countdown, loading, error, load, buildClickPayload]
+        [promotion, countdown, loading, error, load, buildClickPayload],
     );
 }

@@ -1,12 +1,12 @@
 /// <reference types="vitest" />
 
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
     test: {
         onConsoleLog(log, type) {
-            // eslint-disable-next-line no-console
-            console[type](log);
+            const method = type === 'stderr' ? 'error' : 'log';
+            console[method](log);
         },
     },
 });

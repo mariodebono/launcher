@@ -3,13 +3,14 @@ import * as os from 'node:os';
 import * as path from 'node:path';
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { ProjectDetails } from '../../types/index.js';
 
 import {
+    __resetProjectsStoreForTesting,
     addProjectToList,
     getStoredProjectsList,
     removeProjectFromList,
     storeProjectsList,
-    __resetProjectsStoreForTesting,
 } from './projects.utils.js';
 
 vi.mock('electron-updater', () => ({
@@ -162,7 +163,10 @@ describe('projects.utils', () => {
             },
         ] as ProjectDetails[]);
 
-        const updated = await removeProjectFromList(projectsFile, '/projects/remove');
+        const updated = await removeProjectFromList(
+            projectsFile,
+            '/projects/remove',
+        );
         expect(updated).toHaveLength(1);
         expect(updated[0].path).toBe('/projects/keep');
     });

@@ -1,13 +1,27 @@
 import * as fs from 'node:fs';
 import * as path from 'node:path';
-import mst from 'mustache';
 import logger from 'electron-log';
-import { removeProjectEditorDarwin } from './godot.utils.darwin.js';
-import { removeProjectEditorLinux } from './godot.utils.linux.js';
-import { removeProjectEditorWindows } from './godot.utils.windows.js';
-import { setProjectEditorReleaseDarwin } from './godot.utils.darwin.js';
-import { setProjectEditorReleaseLinux } from './godot.utils.linux.js';
-import { setProjectEditorReleaseWindows } from './godot.utils.windows.js';
+import mst from 'mustache';
+import type {
+    InstalledRelease,
+    LaunchPath,
+    ProjectConfig,
+    ProjectDefinition,
+    ProjectDetails,
+    RendererType,
+} from '../../types/index.js';
+import {
+    removeProjectEditorDarwin,
+    setProjectEditorReleaseDarwin,
+} from './godot.utils.darwin.js';
+import {
+    removeProjectEditorLinux,
+    setProjectEditorReleaseLinux,
+} from './godot.utils.linux.js';
+import {
+    removeProjectEditorWindows,
+    setProjectEditorReleaseWindows,
+} from './godot.utils.windows.js';
 
 // Default project definitions for different editor versions
 export const DEFAULT_PROJECT_DEFINITION: ProjectDefinition = new Map([
@@ -41,7 +55,7 @@ export const DEFAULT_PROJECT_DEFINITION: ProjectDefinition = new Map([
             ],
             projectFilename: 'project.godot',
             editorConfigFilename: (editor_version: number) =>
-                `editor_settings-${parseInt(editor_version.toString())}.tres`,
+                `editor_settings-${parseInt(editor_version.toString(), 10)}.tres`,
             editorConfigFormat: 3,
         },
     ],
@@ -61,9 +75,9 @@ export const DEFAULT_PROJECT_DEFINITION: ProjectDefinition = new Map([
  */
 export function getProjectDefinition(
     editorVersion: number,
-    definitions: ProjectDefinition = DEFAULT_PROJECT_DEFINITION
+    definitions: ProjectDefinition = DEFAULT_PROJECT_DEFINITION,
 ): ProjectConfig | null {
-    const keys = Array.from(definitions.keys());
+    const keys = Array.from(definitions.keys()) as number[];
 
     // get key that is >= editorVersion
     // keys are descending order
@@ -89,16 +103,21 @@ export function getProjectDefinition(
  * @returns A Promise that resolves to the rendered project file content
  * @throws Error if the specified configuration version is not supported
  */
-export async function createProjectFile<version extends keyof RendererType>(
+type RendererConfigVersion = Extract<keyof RendererType, number>;
+
+export async function createProjectFile<version extends RendererConfigVersion>(
     templateDir: string,
     configVersion: version,
     editorVersion: number,
     projectName: string,
-    renderer: RendererType[version]
+    renderer: RendererType[version],
 ) {
     const template = await fs.promises.readFile(
-        path.resolve(templateDir, `project.godot_v${configVersion}.template.mst`),
-        'utf-8'
+        path.resolve(
+            templateDir,
+            `project.godot_v${String(configVersion)}.template.mst`,
+        ),
+        'utf-8',
     );
 
     switch (configVersion) {
@@ -116,7 +135,7 @@ export async function createProjectFile<version extends keyof RendererType>(
         }
 
         default:
-            throw new Error(`Invalid config version ${configVersion}`);
+            throw new Error(`Invalid config version ${String(configVersion)}`);
     }
 }
 
@@ -132,7 +151,7 @@ export async function removeEditorSymlink(launchPath: string): Promise<void> {
 }
 
 export async function removeProjectEditor(
-    project: ProjectDetails
+    project: ProjectDetails,
 ): Promise<void> {
     if (process.platform === 'darwin') {
         await removeProjectEditorDarwin(project);
@@ -146,7 +165,7 @@ export async function removeProjectEditor(
 export async function SetProjectEditorRelease(
     projectEditorPath: string,
     release: InstalledRelease,
-    previousRelease?: InstalledRelease
+    previousRelease?: InstalledRelease,
 ): Promise<LaunchPath> {
     const scFilePath = path.resolve(projectEditorPath, '._sc_');
 
@@ -162,7 +181,7 @@ export async function SetProjectEditorRelease(
         return await setProjectEditorReleaseDarwin(
             projectEditorPath,
             release,
-            previousRelease
+            previousRelease,
         );
     } else if (process.platform === 'win32') {
         logger.log('Setting project editor release for Windows');
@@ -172,13 +191,13 @@ export async function SetProjectEditorRelease(
         return await setProjectEditorReleaseWindows(
             projectEditorPath,
             release,
-            previousRelease
+            previousRelease,
         );
     } else if (process.platform === 'linux') {
         return await setProjectEditorReleaseLinux(
             projectEditorPath,
             release,
-            previousRelease
+            previousRelease,
         );
     }
 

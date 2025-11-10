@@ -1,24 +1,24 @@
-import { BrowserWindow, Menu, app, dialog } from 'electron';
-import logger from 'electron-log/main.js';
 import path from 'node:path';
-import { createDefaultFolder, registerHandlers, initI18n } from './app.js';
+import { app, BrowserWindow, dialog, Menu } from 'electron';
+import logger from 'electron-log/main.js';
+import { createDefaultFolder, initI18n, registerHandlers } from './app.js';
 import { setupAutoUpdate, stopAutoUpdateChecks } from './autoUpdater.js';
 import { checkAndUpdateProjects, checkAndUpdateReleases } from './checks.js';
 import { getUserPreferences } from './commands/userPreferences.js';
-import { runMigrations } from './migrations/index.js';
 import { createMenu } from './helpers/menu.helper.js';
 import { setupFocusRevalidation } from './helpers/revalidate.helper.js';
 import { createTray } from './helpers/tray.helper.js';
+import { runMigrations } from './migrations/index.js';
 import { getAssetPath, getPreloadPath, getUIPath } from './pathResolver.js';
-import { isDev } from './utils.js';
 import { setAutoStart } from './utils/platform.utils.js';
+import { isDev } from './utils.js';
 
 logger.initialize();
 
 logger.info('Starting Godot Launcher');
 logger.info(`Version: ${app.getVersion()}`);
 logger.info(
-    `Electron: ${process.versions.electron}, Chrome: ${process.versions.chrome}, Node: ${process.versions.node}, V8: ${process.versions.v8}`
+    `Electron: ${process.versions.electron}, Chrome: ${process.versions.chrome}, Node: ${process.versions.node}, V8: ${process.versions.v8}`,
 );
 logger.info(`Platform: ${process.platform}, Arch: ${process.arch}`);
 logger.info(`isDev: ${isDev()}`);
@@ -26,15 +26,14 @@ logger.info(`App path: ${app.getAppPath()}`);
 logger.info(`Debug flags: ${process.argv.includes('--debug')}`);
 if (process.platform === 'linux') {
     logger.info(
-        `sandbox disabled: ${process.argv.includes('--no-sandbox') || process.argv.includes('--disable-sandbox') || process.env.GODOT_LAUNCHER_DISABLE_SANDBOX === '1'}`
+        `sandbox disabled: ${process.argv.includes('--no-sandbox') || process.argv.includes('--disable-sandbox') || process.env.GODOT_LAUNCHER_DISABLE_SANDBOX === '1'}`,
     );
 }
 
-
-
-const devNoMenu = process.argv.includes('--no-dev-menu') || process.env.GODOT_LAUNCHER_NO_DEV_MENU === '1';
-if(isDev() && devNoMenu)
-{
+const devNoMenu =
+    process.argv.includes('--no-dev-menu') ||
+    process.env.GODOT_LAUNCHER_NO_DEV_MENU === '1';
+if (isDev() && devNoMenu) {
     logger.info('Developer menu disabled via --no-dev-menu flag');
 }
 
@@ -68,6 +67,7 @@ Menu.setApplicationMenu(null);
 
 let disposeFocusRevalidation: (() => void) | undefined;
 let _mainWindow: BrowserWindow | null = null;
+// biome-ignore lint/style/noNonNullAssertion: safer to use non-null assertion here
 export const getMainWindow: () => BrowserWindow = () => _mainWindow!;
 
 if (!isDev()) {
@@ -78,7 +78,7 @@ if (!isDev()) {
         app.quit();
     } else {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        app.on('second-instance', (event, commandLine, workingDirectory) => {
+        app.on('second-instance', (_event, _commandLine, _workingDirectory) => {
             if (_mainWindow) {
                 if (_mainWindow.isMinimized()) {
                     _mainWindow.restore();
@@ -180,10 +180,10 @@ app.on('ready', async () => {
     });
 
     app.dock?.setIcon(
-        path.join(getAssetPath(), 'icons', platformIconDir, 'appIcon.png')
+        path.join(getAssetPath(), 'icons', platformIconDir, 'appIcon.png'),
     );
     mainWindow.setIcon(
-        path.join(getAssetPath(), 'icons', platformIconDir, 'appIcon.png')
+        path.join(getAssetPath(), 'icons', platformIconDir, 'appIcon.png'),
     );
 
     if (isDev()) {
@@ -211,7 +211,7 @@ app.on('ready', async () => {
         prefs.auto_check_updates,
         60 * 60 * 1000,
         true,
-        true
+        true,
     );
 
     disposeFocusRevalidation = setupFocusRevalidation(mainWindow);
@@ -221,7 +221,7 @@ app.on('ready', async () => {
             if (app.getLoginItemSettings().wasOpenedAtLogin) {
                 if (prefs.start_in_tray) {
                     logger.info(
-                        'App was opened at login with prefs.start_in_tray, hiding window'
+                        'App was opened at login with prefs.start_in_tray, hiding window',
                     );
                     mainWindow.hide();
                     app.dock?.hide();
@@ -261,7 +261,7 @@ function handleCloseEvents(mainWindow: BrowserWindow) {
                     willClose === false);
             if (onboardingIncomplete) {
                 logger.debug(
-                    'Incomplete onboarding, quitting instead of hiding'
+                    'Incomplete onboarding, quitting instead of hiding',
                 );
                 app.quit();
             }
@@ -291,14 +291,14 @@ function handleCloseEvents(mainWindow: BrowserWindow) {
         logger.debug('Showing window');
 
         app.dock?.setIcon(
-            path.join(getAssetPath(), 'icons', platformIconDir, 'appIcon.png')
+            path.join(getAssetPath(), 'icons', platformIconDir, 'appIcon.png'),
         );
         mainWindow.setIcon(
-            path.join(getAssetPath(), 'icons', platformIconDir, 'appIcon.png')
+            path.join(getAssetPath(), 'icons', platformIconDir, 'appIcon.png'),
         );
 
         logger.log(
-            `Showing Window, setting dock icon to ${path.join(getAssetPath(), 'icons', platformIconDir, 'appIcon.png')}`
+            `Showing Window, setting dock icon to ${path.join(getAssetPath(), 'icons', platformIconDir, 'appIcon.png')}`,
         );
 
         willClose = false;

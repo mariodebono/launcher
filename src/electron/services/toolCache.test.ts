@@ -1,13 +1,14 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
 import * as fs from 'node:fs';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import type { InstalledTool, UserPreferences } from '../../types/index.js';
+import * as installedToolsModule from '../commands/installedTools.js';
+import * as userPreferencesModule from '../commands/userPreferences.js';
 import {
     getCachedTools,
     isCacheStale,
     isToolAvailable,
     refreshToolCache,
 } from './toolCache.js';
-import * as userPreferencesModule from '../commands/userPreferences.js';
-import * as installedToolsModule from '../commands/installedTools.js';
 
 vi.mock('node:fs', () => ({
     existsSync: vi.fn(),
@@ -105,7 +106,7 @@ describe('toolCache service', () => {
                             verified: true,
                         })),
                     },
-                })
+                }),
             );
             expect(tools).toEqual([
                 {
@@ -200,7 +201,7 @@ describe('toolCache service', () => {
                             verified: true,
                         })),
                     },
-                })
+                }),
             );
             expect(tools).toEqual([
                 {
